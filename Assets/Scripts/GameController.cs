@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class GameController : MonoBehaviour
 {
@@ -14,11 +15,17 @@ public class GameController : MonoBehaviour
 
     public static event PuzzleHandler FirstPuzzleOpened;
 
+    
+    [SerializeField]
+    private List<Transform> positions = new List<Transform>();
 
-    void Start()
+    private void Awake()
     {
+        positions.AddRange(GameObject.FindGameObjectWithTag("PlaceHolders")
+            .GetComponentsInChildren<Transform>());
         
     }
+    
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.F) )

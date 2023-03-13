@@ -7,14 +7,14 @@ public class SecondDoorTrigger : DoorTrigger
     protected override void Awake()
     {
         base.Awake();
-        DoorTrigger.SideTriggerEntered += HideTrigger;
-        CameraTriggers.CenterTriggerEntered += ShowTrigger;
+        //DoorTrigger.SideTriggerEntered += HideTrigger;
+        // CameraTriggers.CenterTriggerEntered += ShowTrigger;
     }
-    void ShowTrigger(int x)
+    void ShowTrigger()
     {
         this.gameObject.SetActive(true);
     }
-    void HideTrigger(int x)
+    void HideTrigger()
     {
         this.gameObject.SetActive(false);
     }

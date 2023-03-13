@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DoorTrigger : CameraTriggers
 {
-    public delegate void DoorTriggerHandler(int i);
+    public delegate void DoorTriggerHandler();
 
     public static event DoorTriggerHandler FirstDoorTriggerEntered;
     public static event DoorTriggerHandler SecondDoorTriggerEntered;
@@ -23,7 +23,7 @@ public class DoorTrigger : CameraTriggers
         base.TurnObjectOff();
     }
 
-    void OnTriggerStay(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         //verificará o nome do trigger atual, e disparará um evento de acordo
         if(other.gameObject.tag == "Player")
@@ -34,21 +34,21 @@ public class DoorTrigger : CameraTriggers
                 case "DoorTrigger1":
                     if(FirstDoorTriggerEntered != null)
                     {
-                        FirstDoorTriggerEntered(2);
+                        FirstDoorTriggerEntered();
                         Debug.Log("Evento Disparado");
                     }
                     break;
                 case "DoorTrigger2":
                     if(SecondDoorTriggerEntered != null)
                     {
-                        SecondDoorTriggerEntered(3);
+                        SecondDoorTriggerEntered();
                         Debug.Log("Evento Disparado");
                     }
                     break;
                 case "DoorTrigger3":
                     if(ThirdDoorTriggerEntered != null)
                     {
-                        ThirdDoorTriggerEntered(4);
+                        ThirdDoorTriggerEntered();
                         Debug.Log("Evento Disparado");
                     }
                     break;

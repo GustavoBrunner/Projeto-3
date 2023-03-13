@@ -7,15 +7,15 @@ public class SecRoomSideTriggers : CameraTriggers
     protected override void Awake()
     {
         base.Awake();
-        gameObject.SetActive(false);
-        CameraTriggers.CenterTriggerEntered += ShowAllTrigger;
-        DoorTrigger.FirstDoorTriggerEntered += HideTrigger;
+        //gameObject.SetActive(false);
+        //CameraTriggers.CenterTriggerEntered += ShowAllTrigger;
+        //DoorTrigger.FirstDoorTriggerEntered += HideTrigger;
     }
-    void ShowAllTrigger(int x)
+    void ShowAllTrigger()
     {
         this.gameObject.SetActive(true);
     }
-    void HideTrigger(int x)
+    void HideTrigger()
     {
         this.gameObject.SetActive(false);
     }

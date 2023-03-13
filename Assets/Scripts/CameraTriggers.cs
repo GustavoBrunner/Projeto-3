@@ -5,13 +5,13 @@ using UnityEngine;
 public class CameraTriggers : ObjectsScript
 {
     
-    public delegate void SideTriggersHandler(int x);
+    public delegate void SideTriggersHandler();
     protected Collider clldr;
     protected List<CameraTriggers> triggers = new List<CameraTriggers>();
 
     public static event SideTriggersHandler SideTriggerEntered;
-    public static event SideTriggersHandler CenterTriggerEntered;
-
+    public static event SideTriggersHandler ThirdSideTriggerEntered;
+    public static event SideTriggersHandler SecondSideTriggerEntered;
 
     protected override void Awake()
     {
@@ -19,6 +19,7 @@ public class CameraTriggers : ObjectsScript
         clldr = GetComponent<Collider>();
         clldr.isTrigger = true;
         triggers.AddRange(GetComponentsInChildren<CameraTriggers>());
+        clldr.enabled = true;
         //TurnAllOff();
     }
     protected virtual void TurnObjectOn()
@@ -42,7 +43,7 @@ public class CameraTriggers : ObjectsScript
             }
         }
     }
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         //Verifica qual que é o side trigger que foi entrado pelo player, e voltará a navegação de acordo
         if(other.gameObject.tag == "Player")
@@ -50,36 +51,36 @@ public class CameraTriggers : ObjectsScript
             switch (this.gameObject.name)
             {
                 case "TriggerCenter1":
-                    if(CenterTriggerEntered != null)
+                    if(ThirdSideTriggerEntered != null)
                     {
-                        CenterTriggerEntered(1);
+                        ThirdSideTriggerEntered();
                     }
                     break;
-                case "TriggerCenter0":
-                    if(CenterTriggerEntered != null)
-                    {
-                        CenterTriggerEntered(0);
-                    }
-                    break;
+                //case "TriggerCenter0":
+                //    if(CenterTriggerEntered != null)
+                //    {
+                //        CenterTriggerEntered();
+                //    }
+                //    break;
                 case "SideTrigger1":
                     if(SideTriggerEntered != null)
                     {
-                        SideTriggerEntered(1);
+                        SideTriggerEntered();
                     }
                     break;
                 case "SideTrigger2":
-                    if (SideTriggerEntered != null)
+                    if (SecondSideTriggerEntered != null)
                     {
-                        SideTriggerEntered(2);
+                        SecondSideTriggerEntered();
                     }
                     break;
-                case "TriggerCenter2":
-                    if(CenterTriggerEntered != null)
-                    {
-                        CenterTriggerEntered(2);
-                        Debug.Log("evento disparado");
-                    }
-                    break;
+                //case "TriggerCenter2":
+                //    if(CenterTriggerEntered != null)
+                //    {
+                //        CenterTriggerEntered();
+                //        Debug.Log("evento disparado");
+                //    }
+                //    break;
                 default:
                     break;
             }

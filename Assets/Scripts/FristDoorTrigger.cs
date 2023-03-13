@@ -7,16 +7,17 @@ public class FristDoorTrigger : DoorTrigger
     protected override void Awake()
     {
         base.Awake();
-        CameraTriggers.SideTriggerEntered += HideTrigger;
-        CameraTriggers.CenterTriggerEntered += ShowTrigger;
+        //CameraTriggers.SideTriggerEntered += HideTrigger;
+        //CameraTriggers.CenterTriggerEntered += ShowTrigger;
     }
 
-    void HideTrigger(int x)
+    void HideTrigger()
     {
         this.gameObject.SetActive(false);
     }
-    void ShowTrigger(int x)
+    void ShowTrigger()
     {
         this.gameObject.SetActive(true);
     }
+    
 }

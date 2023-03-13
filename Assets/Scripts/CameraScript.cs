@@ -4,28 +4,60 @@ using UnityEngine;
 
 public class CameraScript : MonoBehaviour
 {
+    public delegate void CameraMoveHandler(int x);
+    public static event CameraMoveHandler CameraMove;
     private Vector3 target = new Vector3();
     Transform tf;
     float speed = 7f;
-    [SerializeField]
-    private List<Transform> positions = new List<Transform>();
+    private Animator camAnimator;
+    private bool animationControl; //checará se o jogador recém passou por um trigger, se não, ele seguirá, se não, a câmera voltará
     void Awake()
     {
-        positions.AddRange(GameObject.FindGameObjectWithTag("PlaceHolders")
-            .GetComponentsInChildren<Transform>());
         tf = GetComponent<Transform>();
-        DoorTrigger.FirstDoorTriggerEntered += SideScrollCamera;
-        DoorTrigger.SecondDoorTriggerEntered += SideScrollCamera;
-        CameraTriggers.SideTriggerEntered += SideScrollCamera;
-       
+        camAnimator = GetComponent<Animator>(); 
     }
-    void SideScrollCamera(int _i)
+    private void LateUpdate()
     {
-        //Código para mover a câmera para o segundo lugar da casa. 
-        target.x = positions[_i].position.x;
-        target.y = transform.position.y;
-        target.z = transform.position.z;
-        transform.position = Vector3.MoveTowards(tf.transform.position, target, Time.deltaTime *speed);
+        StartAnimation();
     }
-
+    
+    void StartAnimation()
+    {
+        if (camAnimator != null)
+        {
+            //refazer o códigos: receber um evento somente, com um parâmetro, e fazer um switch com base no parâmetro
+            //mais otimizado
+            DoorTrigger.FirstDoorTriggerEntered += FirstAnimation;
+            DoorTrigger.SecondDoorTriggerEntered += SecondAnimation;
+            CameraTriggers.SideTriggerEntered += ThirdAnimation;
+            CameraTriggers.SecondSideTriggerEntered += ForthAnimation;
+        }
+    }
+    void FirstAnimation()
+    {
+        Debug.Log("evento de animação funcionando");
+        camAnimator.SetTrigger("FirstCamAnimationStart");
+    }
+    void SecondAnimation()
+    {
+        camAnimator.SetTrigger("SecondCamAnimationStart");
+        if(CameraMove != null)
+        {
+            CameraMove(1);
+            Debug.Log("mudando instancia de movimento");
+        }
+    }
+    void ThirdAnimation()
+    {
+        camAnimator.SetTrigger("ThirdCamAnimationStart");
+        
+    }
+    void ForthAnimation()
+    {
+        camAnimator.SetTrigger("ForthCamAnimationStart");
+        if(CameraMove != null)
+        {
+            CameraMove(2);
+        }
+    }
 }

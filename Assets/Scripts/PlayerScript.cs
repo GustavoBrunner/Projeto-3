@@ -11,7 +11,7 @@ public class PlayerScript : MonoBehaviour
     private Vector3 direction;
     private float speed = 5f;
     private bool CanMove;
-    private float RoomTransitionTime = 3f;
+    private float RoomTransitionTime = 2f;
 
     //------------------------------------------------
     //puzzles
@@ -19,7 +19,8 @@ public class PlayerScript : MonoBehaviour
 
     public static event FirstPuzzleItemInteraction OnFirstPuzzleItemInteracted;
     public static event FirstPuzzleItemInteraction OnFirstPuzzlePickedUp;
-
+    private bool invertedMovement = false;
+    private int moveInstance = 0;
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -30,27 +31,57 @@ public class PlayerScript : MonoBehaviour
         DoorTrigger.FirstDoorTriggerEntered += StopMoving;
         DoorTrigger.SecondDoorTriggerEntered += StopMoving;
         CameraTriggers.SideTriggerEntered += StopMoving;
-
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        move();
+        CameraScript.CameraMove += ChangeMoveInstance;
+        
+        Move(moveInstance);
+
     }
 
-    private void move()
+    private void Move(int x)
     {
         //Responsável por fazer o jogador se mover pelo mapa
         if(CanMove)
         {
-            Vertical = Input.GetAxis("Vertical");
-            Horizontal = Input.GetAxis("Horizontal");
-            direction = new Vector3(Horizontal, 0f, Vertical);
-            rb.velocity = direction * speed;
+            switch(moveInstance)
+            {
+                case 0:
+                    Vertical = Input.GetAxis("Vertical");
+                    Horizontal = Input.GetAxis("Horizontal");
+                    direction = new Vector3(Horizontal, 0f, Vertical);
+                    rb.velocity = direction * speed;
+                    break;
+                case 1:
+                    Vertical = Input.GetAxis("Vertical");
+                    Horizontal = Input.GetAxis("Horizontal");
+                    direction = new Vector3(-Vertical, 0f, Horizontal);
+                    rb.velocity = direction * speed;
+                    break;
+                case 2:
+                    Vertical = Input.GetAxis("Vertical");
+                    Horizontal = Input.GetAxis("Horizontal");
+                    direction = new Vector3(-Horizontal, 0f, -Vertical);
+                    rb.velocity = direction * speed;
+                    break;
+                case 3:
+
+                    break;
+                default:
+                    break;
+            }
         }
     }
-    private void StopMoving(int _i)
+    void ChangeMoveInstance(int x)
+    {
+        this.moveInstance = x;
+    }
+    
+    private void StopMoving()
     {
         //Responsável por trocar o valor bool da variável de movimentação durante a transição de cômodo
         rb.velocity = Vector3.zero;
