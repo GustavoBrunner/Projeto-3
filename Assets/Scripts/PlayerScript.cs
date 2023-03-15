@@ -11,7 +11,7 @@ public class PlayerScript : MonoBehaviour
     private Vector3 direction;
     private float speed = 5f;
     private bool CanMove;
-    private float RoomTransitionTime = 2f;
+    private float RoomTransitionTime = 1f;
 
     //------------------------------------------------
     //puzzles
@@ -69,7 +69,10 @@ public class PlayerScript : MonoBehaviour
                     rb.velocity = direction * speed;
                     break;
                 case 3:
-
+                    Vertical = Input.GetAxis("Vertical");
+                    Horizontal = Input.GetAxis("Horizontal");
+                    direction = new Vector3(Horizontal, 0f, Vertical);
+                    rb.velocity = direction * speed;
                     break;
                 default:
                     break;

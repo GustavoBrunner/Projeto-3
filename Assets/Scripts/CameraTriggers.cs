@@ -10,8 +10,13 @@ public class CameraTriggers : ObjectsScript
     protected List<CameraTriggers> triggers = new List<CameraTriggers>();
 
     public static event SideTriggersHandler SideTriggerEntered;
-    public static event SideTriggersHandler ThirdSideTriggerEntered;
     public static event SideTriggersHandler SecondSideTriggerEntered;
+    public static event SideTriggersHandler ThirdSideTriggerEntered;
+    public static event SideTriggersHandler ForthSideTriggerEntered;
+    public static event SideTriggersHandler FifthSideTriggerEntered;
+    public static event SideTriggersHandler SixthSideTriggerEntered;
+    public static event SideTriggersHandler SeventhSideTriggerEntered;
+
 
     protected override void Awake()
     {
@@ -24,12 +29,12 @@ public class CameraTriggers : ObjectsScript
     }
     protected virtual void TurnObjectOn()
     {
-        //Responsável por ligar todos os triggers da câmera
+        //Responsï¿½vel por ligar todos os triggers da cï¿½mera
         gameObject.SetActive(true);
     }
     protected virtual void TurnObjectOff()
     {
-        //Responsável por desligar todos os triggers da câmera
+        //Responsï¿½vel por desligar todos os triggers da cï¿½mera
         gameObject.SetActive(false);
     }
     protected void TurnAllOff()
@@ -45,23 +50,23 @@ public class CameraTriggers : ObjectsScript
     }
     private void OnTriggerEnter(Collider other)
     {
-        //Verifica qual que é o side trigger que foi entrado pelo player, e voltará a navegação de acordo
+        //Verifica qual que ï¿½ o side trigger que foi entrado pelo player, e voltarï¿½ a navegaï¿½ï¿½o de acordo
         if(other.gameObject.tag == "Player")
         {
             switch (this.gameObject.name)
             {
-                case "TriggerCenter1":
+                case "SideTrigger3":
                     if(ThirdSideTriggerEntered != null)
                     {
                         ThirdSideTriggerEntered();
                     }
                     break;
-                //case "TriggerCenter0":
-                //    if(CenterTriggerEntered != null)
-                //    {
-                //        CenterTriggerEntered();
-                //    }
-                //    break;
+                case "SideTrigger4":
+                    if(ForthSideTriggerEntered != null)
+                    {
+                        ForthSideTriggerEntered();
+                    }
+                    break;
                 case "SideTrigger1":
                     if(SideTriggerEntered != null)
                     {
@@ -74,13 +79,24 @@ public class CameraTriggers : ObjectsScript
                         SecondSideTriggerEntered();
                     }
                     break;
-                //case "TriggerCenter2":
-                //    if(CenterTriggerEntered != null)
-                //    {
-                //        CenterTriggerEntered();
-                //        Debug.Log("evento disparado");
-                //    }
-                //    break;
+                case "SideTrigger5":
+                    if(FifthSideTriggerEntered != null)
+                    {
+                        FifthSideTriggerEntered();
+                    }
+                    break;
+                case "SideTrigger6":
+                    if(SixthSideTriggerEntered != null)
+                    {
+                        SixthSideTriggerEntered();
+                    }
+                    break;
+                case "SideTrigger7":
+                    if(SeventhSideTriggerEntered != null)
+                    {
+                        SeventhSideTriggerEntered();
+                    }
+                    break;
                 default:
                     break;
             }

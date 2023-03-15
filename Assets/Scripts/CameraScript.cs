@@ -10,7 +10,7 @@ public class CameraScript : MonoBehaviour
     Transform tf;
     float speed = 7f;
     private Animator camAnimator;
-    private bool animationControl; //checará se o jogador recém passou por um trigger, se não, ele seguirá, se não, a câmera voltará
+    private bool animationControl; //checarï¿½ se o jogador recï¿½m passou por um trigger, se nï¿½o, ele seguirï¿½, se nï¿½o, a cï¿½mera voltarï¿½
     void Awake()
     {
         tf = GetComponent<Transform>();
@@ -25,17 +25,18 @@ public class CameraScript : MonoBehaviour
     {
         if (camAnimator != null)
         {
-            //refazer o códigos: receber um evento somente, com um parâmetro, e fazer um switch com base no parâmetro
-            //mais otimizado
             DoorTrigger.FirstDoorTriggerEntered += FirstAnimation;
             DoorTrigger.SecondDoorTriggerEntered += SecondAnimation;
             CameraTriggers.SideTriggerEntered += ThirdAnimation;
             CameraTriggers.SecondSideTriggerEntered += ForthAnimation;
+            CameraTriggers.ThirdSideTriggerEntered += FifthAnimation;
+            CameraTriggers.ForthSideTriggerEntered += SixthAnimation;
+            CameraTriggers.FifthSideTriggerEntered += SeventhAnimation;
+            CameraTriggers.SixthSideTriggerEntered += EighthAnimation;
         }
     }
     void FirstAnimation()
     {
-        Debug.Log("evento de animação funcionando");
         camAnimator.SetTrigger("FirstCamAnimationStart");
     }
     void SecondAnimation()
@@ -44,7 +45,6 @@ public class CameraScript : MonoBehaviour
         if(CameraMove != null)
         {
             CameraMove(1);
-            Debug.Log("mudando instancia de movimento");
         }
     }
     void ThirdAnimation()
@@ -58,6 +58,31 @@ public class CameraScript : MonoBehaviour
         if(CameraMove != null)
         {
             CameraMove(2);
+        }
+    }
+    void FifthAnimation()
+    {
+        camAnimator.SetTrigger("FifthCamAnimationStart");
+        
+    }
+    void SixthAnimation()
+    {
+        camAnimator.SetTrigger("SixthCamAnimationStart");
+        if(CameraMove != null)
+        {
+            CameraMove(3);
+        }
+    }
+    void SeventhAnimation()
+    {
+        camAnimator.SetTrigger("SeventhCamAnimationStart");
+    }
+    void EighthAnimation()
+    {
+        camAnimator.SetTrigger("EighthCamAnimationStart");
+        if (CameraMove != null)
+        {
+            CameraMove(0);
         }
     }
 }
